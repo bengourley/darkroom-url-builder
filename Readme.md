@@ -8,9 +8,13 @@ A module that builds URLs for your darkroom resources.
 npm install darkroom-url-builder
 ```
 
+```js
+var createDarkroomUrlBuilder = require('darkroom-url-builder')
+```
+
 ## API
 
-### var builder = createBuilder(darkroomUrl, salt)
+### var builder = createDarkroomUrlBuilder(darkroomUrl, salt)
 
 Returns a URL builder instance. `darkroomUrl` and `salt` are required, as these are
 both used in the composition of the URLs.
@@ -63,7 +67,7 @@ Builds a URL that points to a JSON endpoint describing the resource's dimensions
 
 ```js
 var createDarkroomUrlBuilder = require('darkroom-url-builder')
-  , builder = createBuilder('http://darkroom.io', 'salty')
+  , builder = createDarkroomUrlBuilder('http://darkroom.io', 'salty')
 
 var thumb = builder()
   .resource('00000000000000000000000000000000')
