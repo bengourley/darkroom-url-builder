@@ -20,11 +20,13 @@ Builder.prototype.resource = function (resource) {
 }
 
 Builder.prototype.width = function (width) {
+  assertNumber(width, 'width')
   this._width = width
   return this
 }
 
 Builder.prototype.height = function (height) {
+  assertNumber(height, 'height')
   this._height = height
   return this
 }
@@ -40,18 +42,21 @@ Builder.prototype.info = function () {
 
 Builder.prototype.url = function () {
 
-  if (!this.resource) throw new Error('Cannot build a url without a valid resource')
-
-  var filename = this._filename ? '/' + this._filename : ''
+  if (!this._resource) throw new Error('Cannot build a url without a valid resource')
 
   if (this._width && this._height) {
-    return constructUrl(this.darkroomUrl, this.salt, [ this._width, this._height ], this._resource) + filename
+    return constructUrl(this.darkroomUrl, this.salt, [ this._width, this._height ], this._resource, this._filename)
   } else if (!this._width && this._height) {
-    return constructUrl(this.darkroomUrl, this.salt, [ 0, this._height ], this._resource) + filename
+    return constructUrl(this.darkroomUrl, this.salt, [ 0, this._height ], this._resource, this._filename)
   } else if (this._width && !this._height) {
-    return constructUrl(this.darkroomUrl, this.salt, [ this._width ], this._resource) + filename
+    return constructUrl(this.darkroomUrl, this.salt, [ this._width ], this._resource, this._filename)
   } else {
-    return constructUrl(this.darkroomUrl, this.salt, 'original', this._resource) + filename
+    return constructUrl(this.darkroomUrl, this.salt, 'original', this._resource, this._filename)
   }
 
+}
+
+function assertNumber(n, name) {
+  if (typeof n !== 'number') throw new Error('Expected ' + name + ' to be a number, got "' + typeof n + '"')
+  if (isNaN(n)) throw new Error('Expected ' + name + ' to be a number, got "NaN"')
 }

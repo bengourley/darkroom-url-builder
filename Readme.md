@@ -2,6 +2,12 @@
 
 A module that builds URLs for your darkroom resources.
 
+## Installing
+
+```
+npm install darkroom-url-builder
+```
+
 ## API
 
 ### var builder = createBuilder(darkroomUrl, salt)
@@ -28,7 +34,7 @@ Set the height of the asset you want to receive.
 
 Returns `builder` instance for chaining.
 
-### builder.filename(String:name)
+### builder.filename(String:name) (optional)
 
 Set the filename of the asset you want to recieve. This is for vanity of the URL
 and has no bearing on the response format or content-type headers.
@@ -48,6 +54,10 @@ and create a URL for that instead.
 
 Darkroom will only constrain images to the dimensions, it will not upscale. e.g.: if the original
 resource is 400px wide, asking for an 800px will return an image no bigger than 400px.
+
+### builder.info()
+
+Builds a URL that points to a JSON endpoint describing the resource's dimensions.
 
 ## Example usage:
 
