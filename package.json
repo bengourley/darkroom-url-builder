@@ -1,6 +1,6 @@
 {
   "name": "darkroom-url-builder",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Build URLs for darkroom resources",
   "main": "url-builder.js",
   "scripts": {
