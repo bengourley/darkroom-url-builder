@@ -16,36 +16,41 @@ var createDarkroomUrlBuilder = require('darkroom-url-builder')
 
 ### var builder = createDarkroomUrlBuilder(darkroomUrl, salt)
 
-Returns a URL builder instance. `darkroomUrl` and `salt` are required, as these are
-both used in the composition of the URLs.
+Returns a function that creates URL builder instances. `darkroomUrl` and `salt`
+are required, as these are both used in the composition of the URLs.
 
-### builder.resource(String:uri)
+### var b = builder()
+
+Create a new URL builder instance. Every time you want to build a new URL, you
+start with this function.
+
+### b.resource(String:uri)
 
 Set the resource you want a URL for. This is the URI that darkroom gave you when you posted
 or cropped your asset.
 
-Returns `builder` instance for chaining.
+Returns `b` for chaining.
 
-### builder.width(Number:n) (optional)
+### b.width(Number:n) (optional)
 
 Set the width of the asset you want to receive.
 
-Returns `builder` instance for chaining.
+Returns `b` for chaining.
 
-### builder.height(Number:n) (optional)
+### b.height(Number:n) (optional)
 
 Set the height of the asset you want to receive.
 
-Returns `builder` instance for chaining.
+Returns `b` for chaining.
 
-### builder.filename(String:name) (optional)
+### b.filename(String:name) (optional)
 
 Set the filename of the asset you want to recieve. This is for vanity of the URL
 and has no bearing on the response format or content-type headers.
 
-Returns `builder` instance for chaining.
+Returns `b` for chaining.
 
-### builder.url()
+### b.url()
 
 Builds a URL pointing to the `resource` described by the combination of `width`, `height`
 `filename` settings. If `width` and `height` are not set, the URL will point to the original
@@ -59,7 +64,7 @@ and create a URL for that instead.
 Darkroom will only constrain images to the dimensions, it will not upscale. e.g.: if the original
 resource is 400px wide, asking for an 800px will return an image no bigger than 400px.
 
-### builder.info()
+### b.info()
 
 Builds a URL that points to a JSON endpoint describing the resource's dimensions.
 
