@@ -11,7 +11,7 @@ function constructUrl(darkroomUrl, salt, action, uri, filename) {
 
   var hash = getActionHash(salt, action, uri)
 
-  filename = filename ? '/' + filename : ''
-  return [ darkroomUrl, action, uri + ':' + hash ].join('/') + escapeFilename(filename)
+  filename = filename ? '/' + escapeFilename(filename) : ''
+  return [ darkroomUrl, action, uri + ':' + hash ].join('/') + filename
 
 }
