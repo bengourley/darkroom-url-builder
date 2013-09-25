@@ -14,5 +14,8 @@
   "repository": {
     "type": "git",
     "url": "git@github.com:bengourley/darkroom-url-builder.git"
+  },
+  "dependencies": {
+    "slugg": "~0.1.2"
   }
 }

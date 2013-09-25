@@ -6,6 +6,7 @@ var assert = require('assert')
   , constructUrl = require('../construct-url')
   , url = require('url')
   , createDarkroomUrlBuilder = require('../url-builder')
+  , escapeFilename = require('../escape-filename')
 
 describe('getActionHash()', function () {
 
@@ -24,6 +25,20 @@ describe('getActionHash()', function () {
       assert.equal(hash, md5sum.digest('hex'))
 
     })
+
+  })
+
+})
+
+describe('escapeFilename()', function () {
+
+  it('should make passed strings URL safe', function () {
+
+    assert.equal(escapeFilename('pathy/pathy.jpg'), 'pathy-pathy.jpg')
+    assert.equal(escapeFilename('pathy/pathy.jp:g'), 'pathy-pathy-jp-g')
+    assert.equal(escapeFilename('?query.png'), 'query.png')
+    assert.equal(escapeFilename('realyrealkflk4lfrjkfksdjbfksdjbk4j234r43_long.gif'), 'realyrealkflk4lfrjkfksdjbfksdjbk4j234r43-long.gif')
+    assert.equal(escapeFilename('fa-la-di-da.png'), 'fa-la-di-da.png')
 
   })
 
