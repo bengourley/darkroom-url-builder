@@ -3,6 +3,9 @@
   "version": "0.1.4",
   "description": "Build URLs for darkroom resources",
   "main": "url-builder.js",
+  "publishConfig": {
+    "registry": "http://registry.npmjs.org/"
+  },
   "scripts": {
     "test": "./node_modules/.bin/mocha -R spec"
   },
