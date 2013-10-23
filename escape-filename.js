@@ -4,8 +4,8 @@ var slugg = require('slugg')
 
 function escapeFilename(name) {
 
-  // If name is falsy, don't try any string manipulation on it
-  if (!name) return
+  // If name is not a string just return an empty string
+  if (typeof name !== 'string') return ''
 
   var extensionRegExp = /\.[0-9a-z_\-]+$/i
     , match = name.match(extensionRegExp)

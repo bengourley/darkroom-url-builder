@@ -39,7 +39,16 @@ describe('escapeFilename()', function () {
     assert.equal(escapeFilename('?query.png'), 'query.png')
     assert.equal(escapeFilename('realyrealkflk4lfrjkfksdjbfksdjbk4j234r43_long.gif'), 'realyrealkflk4lfrjkfksdjbfksdjbk4j234r43-long.gif')
     assert.equal(escapeFilename('fa-la-di-da.png'), 'fa-la-di-da.png')
+    assert.equal(escapeFilename('fa-la-di-da.png'), 'fa-la-di-da.png')
+    assert.equal(escapeFilename(''), '')
 
+  })
+
+  it('should return an empty string if the argument passed is not a string', function () {
+    assert.equal(escapeFilename(0), '')
+    assert.equal(escapeFilename(false), '')
+    assert.equal(escapeFilename({}), '')
+    assert.equal(escapeFilename([]), '')
   })
 
 })
@@ -66,7 +75,21 @@ describe('constructUrl()', function () {
 
 })
 
-describe('Builder()', function () {
+describe('Builder', function () {
+
+  describe('createBuilder()', function () {
+    it('should throw an error if the darkroom credentials are not passed', function () {
+      assert.throws(function () {
+        createDarkroomUrlBuilder('http://darkroom.io')
+      })
+      assert.throws(function () {
+        createDarkroomUrlBuilder(undefined, 'asdf')
+      })
+      assert.throws(function () {
+        createDarkroomUrlBuilder()
+      })
+    })
+  })
 
   describe('width()', function () {
 
@@ -112,6 +135,14 @@ describe('Builder()', function () {
 
   })
 
+  describe('info()', function () {
+    it('should build a URL pointing to the /info endpoint', function () {
+      var builder = createDarkroomUrlBuilder('http://darkroom.io', 'test salt')
+        , url = builder().resource('012ef7ed27c17ea9524f5f5fb3a86921').info()
+      assert(/^http:\/\/darkroom.io\/info\/012ef7ed27c17ea9524f5f5fb3a86921:[\w\d]{32}$/.test(url))
+    })
+  })
+
   describe('url()', function () {
 
     it('should error if the resource has not been set', function () {
@@ -129,11 +160,10 @@ describe('Builder()', function () {
         , resourceUrl = builder()
             .resource('012ef7ed27c17ea9524f5f5fb3a86921')
             .width(100)
-            .height(100)
             .filename('jim.jpeg')
             .url()
 
-      assert(resourceUrl)
+      assert(/^http:\/\/darkroom.io\/100\/012ef7ed27c17ea9524f5f5fb3a86921:[\w\d]{32}\/jim.jpeg$/.test(resourceUrl))
 
     })
 
@@ -146,7 +176,7 @@ describe('Builder()', function () {
             .filename('jim.jpeg')
             .url()
 
-      assert(resourceUrl)
+      assert(/^http:\/\/darkroom.io\/0\/100\/012ef7ed27c17ea9524f5f5fb3a86921:[\w\d]{32}\/jim.jpeg$/.test(resourceUrl))
 
     })
 
@@ -160,7 +190,7 @@ describe('Builder()', function () {
             .filename('jim.jpeg')
             .url()
 
-      assert(resourceUrl)
+      assert(/^http:\/\/darkroom.io\/100\/100\/012ef7ed27c17ea9524f5f5fb3a86921:[\w\d]{32}\/jim.jpeg$/.test(resourceUrl))
 
     })
 
@@ -172,8 +202,7 @@ describe('Builder()', function () {
             .filename('jim.jpeg')
             .url()
 
-      assert(resourceUrl)
-      assert(resourceUrl.indexOf('original'))
+      assert(/^http:\/\/darkroom.io\/original\/012ef7ed27c17ea9524f5f5fb3a86921:[\w\d]{32}\/jim.jpeg$/.test(resourceUrl))
 
     })
 

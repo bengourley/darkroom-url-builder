@@ -98,3 +98,7 @@ var info = builder()
 console.log(info)
 //-> http://darkroom.io/info/0b8bafa96885483bc2778976a514334e:bc2afc01898e3b8e2613793be6cd7598
 ```
+
+## Tests
+
+Run the tests with `npm test`. Generate a coverage report with `npm test --coverage`.
