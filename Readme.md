@@ -1,5 +1,7 @@
 # Darkroom URL builder
 
+[![Build Status](https://travis-ci.org/bengourley/darkroom-url-builder.png)](https://travis-ci.org/bengourley/darkroom-url-builder)
+
 A module that builds URLs for your darkroom resources.
 
 ## Installing
