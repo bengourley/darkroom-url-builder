@@ -37,7 +37,8 @@ describe('escapeFilename()', function () {
     assert.equal(escapeFilename('pathy/pathy.jpg'), 'pathy-pathy.jpg')
     assert.equal(escapeFilename('pathy/pathy.jp:g'), 'pathy-pathy-jp-g')
     assert.equal(escapeFilename('?query.png'), 'query.png')
-    assert.equal(escapeFilename('realyrealkflk4lfrjkfksdjbfksdjbk4j234r43_long.gif'), 'realyrealkflk4lfrjkfksdjbfksdjbk4j234r43-long.gif')
+    assert.equal(escapeFilename('realyrealkflk4lfrjkfksdjbfksdjbk4j234r43_long.gif')
+      , 'realyrealkflk4lfrjkfksdjbfksdjbk4j234r43-long.gif')
     assert.equal(escapeFilename('fa-la-di-da.png'), 'fa-la-di-da.png')
     assert.equal(escapeFilename('fa-la-di-da.png'), 'fa-la-di-da.png')
     assert.equal(escapeFilename(''), '')
@@ -190,11 +191,32 @@ describe('Builder', function () {
             .filename('jim.jpeg')
             .url()
 
-      assert(/^http:\/\/darkroom.io\/100\/100\/012ef7ed27c17ea9524f5f5fb3a86921:[\w\d]{32}\/jim.jpeg$/.test(resourceUrl))
+      assert(/^http:\/\/darkroom.io\/100\/100\/012ef7ed27c17ea9524f5f5fb3a86921:[\w\d]{32}\/jim.jpeg$/
+        .test(resourceUrl))
 
     })
 
-    it('should point to the "original" endpoint without height and width', function () {
+    it('should produce a URL with height, width and mode', function () {
+
+      var createBuilder = createDarkroomUrlBuilder('http://darkroom.io', 'test salt')
+        , builer = createBuilder()
+            .resource('012ef7ed27c17ea9524f5f5fb3a86921')
+            .height(100)
+            .width(100)
+            .mode('fit')
+            .filename('jim.jpeg')
+
+      assert(/^http:\/\/darkroom.io\/100\/100\/fit\/012ef7ed27c17ea9524f5f5fb3a86921:[\w\d]{32}\/jim.jpeg$/
+        .test(builer.mode('fit').url()))
+
+      assert(/^http:\/\/darkroom.io\/100\/100\/cover\/012ef7ed27c17ea9524f5f5fb3a86921:[\w\d]{32}\/jim.jpeg$/
+        .test(builer.mode('cover').url()))
+
+      assert(/^http:\/\/darkroom.io\/100\/100\/stretch\/012ef7ed27c17ea9524f5f5fb3a86921:[\w\d]{32}\/jim.jpeg$/
+        .test(builer.mode('stretch').url()))
+    })
+
+    it('should point to the “original” endpoint without height and width', function () {
 
       var builder = createDarkroomUrlBuilder('http://darkroom.io', 'test salt')
         , resourceUrl = builder()
@@ -202,7 +224,8 @@ describe('Builder', function () {
             .filename('jim.jpeg')
             .url()
 
-      assert(/^http:\/\/darkroom.io\/original\/012ef7ed27c17ea9524f5f5fb3a86921:[\w\d]{32}\/jim.jpeg$/.test(resourceUrl))
+      assert(/^http:\/\/darkroom.io\/original\/012ef7ed27c17ea9524f5f5fb3a86921:[\w\d]{32}\/jim.jpeg$/
+        .test(resourceUrl))
 
     })
 
