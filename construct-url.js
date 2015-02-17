@@ -5,13 +5,10 @@ var getActionHash = require('./get-action-hash')
 
 function constructUrl(darkroomUrl, salt, action, uri, filename) {
 
-  if (Array.isArray(action)) {
-    action = action.join('/')
-  }
-
   var hash = getActionHash(salt, action, uri)
-
   filename = filename ? '/' + escapeFilename(filename) : ''
-  return [ darkroomUrl, action, uri + ':' + hash ].join('/') + filename
+  return [ darkroomUrl ]
+    .concat(action)
+    .concat([ uri + ':' + hash ]).join('/') + filename
 
 }
