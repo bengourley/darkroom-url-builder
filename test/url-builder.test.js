@@ -19,7 +19,7 @@ describe('getActionHash()', function () {
     actions.forEach(function (a, i) {
 
       var md5sum = crypto.createHash('md5')
-        , hash = getActionHash(salts[i], actions[i], uris[i])
+        , hash = getActionHash(salts[i], [ actions[i] ], uris[i])
 
       md5sum.update('/' + actions[i] + '/' + uris[i] + salts[i])
       assert.equal(hash, md5sum.digest('hex'))
@@ -60,7 +60,7 @@ describe('constructUrl()', function () {
 
     var darkroomUrl = 'http://darkroom.io'
       , salt = 'test salt'
-      , actions = [ 'original', [ 100, 200 ] ]
+      , actions = [ [ 'original' ], [ 100, 200 ] ]
       , uri = '012ef7ed27c17ea9524f5f5fb3a86921'
       , filename = 'jim.jpeg'
 
@@ -68,8 +68,8 @@ describe('constructUrl()', function () {
       var parts = url.parse(constructUrl(darkroomUrl, salt, action, uri, filename))
       assert.equal(parts.protocol, 'http:')
       assert.equal(parts.host, 'darkroom.io')
-      if (i === 0) assert(/^\/original\/012ef7ed27c17ea9524f5f5fb3a86921/.test(parts.path))
-      if (i === 1) assert(/^\/100\/200\/012ef7ed27c17ea9524f5f5fb3a86921/.test(parts.path))
+      if (i === 0) assert(/^\/original\/012ef7ed27c17ea9524f5f5fb3a86921/.test(parts.path), parts.path)
+      if (i === 1) assert(/^\/100\/200\/012ef7ed27c17ea9524f5f5fb3a86921/.test(parts.path), parts.path)
     })
 
   })
