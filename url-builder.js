@@ -2,15 +2,28 @@ module.exports = createBuilder
 
 var constructUrl = require('./construct-url')
 
-function createBuilder(darkroomUrl, salt) {
-  if (!darkroomUrl || !salt) throw new Error('arguments `darkroomUrl` and `salt` are required')
-  return function () {
-    return new Builder(darkroomUrl, salt)
+function createBuilder(darkroomHosts, salt) {
+
+  if (!darkroomHosts || !salt) throw new Error('arguments `darkroomHosts` and `salt` are required')
+
+  darkroomHosts = Array.isArray(darkroomHosts) ? darkroomHosts : [ darkroomHosts ]
+
+  var lastUsedUrlIndex = -1
+
+  function getHost() {
+    lastUsedUrlIndex += 1
+    if (lastUsedUrlIndex > darkroomHosts.length - 1) lastUsedUrlIndex = 0
+    return darkroomHosts[lastUsedUrlIndex]
   }
+
+  return function () {
+    return new Builder(getHost(), salt)
+  }
+
 }
 
-function Builder(darkroomUrl, salt) {
-  this.darkroomUrl = darkroomUrl
+function Builder(darkroomHost, salt) {
+  this.darkroomHost = darkroomHost
   this.salt = salt
 }
 
@@ -42,7 +55,7 @@ Builder.prototype.filename = function (filename) {
 }
 
 Builder.prototype.info = function () {
-  return constructUrl(this.darkroomUrl, this.salt, [ 'info' ], this._resource)
+  return constructUrl(this.darkroomHost, this.salt, [ 'info' ], this._resource)
 }
 
 Builder.prototype.url = function () {
@@ -59,7 +72,7 @@ Builder.prototype.url = function () {
     action = [ this._width ]
   }
 
-  return constructUrl(this.darkroomUrl, this.salt, action, this._resource, this._filename)
+  return constructUrl(this.darkroomHost, this.salt, action, this._resource, this._filename)
 }
 
 function assertNumber(n, name) {

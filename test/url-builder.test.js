@@ -231,4 +231,35 @@ describe('Builder', function () {
 
   })
 
+  describe('url rotation', function () {
+
+    it('should rotate usage of darkroom urls when many are provided', function () {
+      var urls = [ 'http://darkroom1.io', 'http://darkroom2.io', 'http://darkroom3.io' ]
+        , builder = createDarkroomUrlBuilder(urls, 'test salt')
+
+      urls.forEach(function (u) {
+
+        var url = builder()
+          .resource('012ef7ed27c17ea9524f5f5fb3a86921')
+          .height(100)
+          .width(100)
+          .filename('jim.jpeg')
+          .url()
+        assert.equal(0, url.indexOf(u))
+
+      })
+
+      // Ensure it loops back to first url too
+      var url = builder()
+          .resource('012ef7ed27c17ea9524f5f5fb3a86921')
+          .height(100)
+          .width(100)
+          .filename('jim.jpeg')
+          .url()
+      assert.equal(0, url.indexOf(urls[0]))
+
+    })
+
+  })
+
 })

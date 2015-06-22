@@ -16,10 +16,13 @@ var createDarkroomUrlBuilder = require('darkroom-url-builder')
 
 ## API
 
-### var builder = createDarkroomUrlBuilder(darkroomUrl, salt)
+### var builder = createDarkroomUrlBuilder(darkroomHost{s}, salt)
 
-Returns a function that creates URL builder instances. `darkroomUrl` and `salt`
+Returns a function that creates URL builder instances. `darkroomHost{s}` and `salt`
 are required, as these are both used in the composition of the URLs.
+
+If multiple darkroom hosts are provided (as an array), a round-robin approach to url
+generation will be used. See [round-robin-hosts](#round-robin-hosts) for more info.
 
 ### var b = builder()
 
@@ -100,6 +103,54 @@ var info = builder()
 console.log(info)
 //-> http://darkroom.io/info/0b8bafa96885483bc2778976a514334e:bc2afc01898e3b8e2613793be6cd7598
 ```
+
+## Round robin hosts
+
+If you are looking to improve your page speed but have quite a few darkroom assets slowing you
+down, you may have seen advise such as the following from the various page speed tools:
+
+> Parallelize downloads across hostnames
+
+> This page makes xx parallelizable requests to darkroom.domain.com. Increase download parallelization by distributing these requests across multiple hostnames
+
+In order to achieve this with darkroom url builder, you can simply pass in a list of darkroom hosts
+for it to use. For each url generated it will use the subsequent item in the list as the hostname, looping
+back to the first item when the list is exhausted. For example:
+
+```js
+var urls = [ 'http://darkroom1.io', 'http://darkroom2.io', 'http://darkroom3.io' ]
+  , builder = createDarkroomUrlBuilder(urls, 'test salt')
+
+builder()
+  .resource('uid')
+  .height(100)
+  .width(100)
+  .filename('jim.jpeg')
+  .url() //-> http://darkroom1.io…
+
+builder()
+  .resource('uid')
+  .height(100)
+  .width(100)
+  .filename('jim.jpeg')
+  .url() //-> http://darkroom2.io…
+
+builder()
+  .resource('uid')
+  .height(100)
+  .width(100)
+  .filename('jim.jpeg')
+  .url() //-> http://darkroom3.io…
+
+builder()
+  .resource('uid')
+  .height(100)
+  .width(100)
+  .filename('jim.jpeg')
+  .url() //-> http://darkroom1.io…
+```
+
+Obviously the DNS work to get all of the hosts pointing the same darkroom instance is up to the user.
 
 ## Tests
 
