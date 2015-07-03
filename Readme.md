@@ -107,7 +107,7 @@ console.log(info)
 ## Round robin hosts
 
 If you are looking to improve your page speed but have quite a few darkroom assets slowing you
-down, you may have seen advise such as the following from the various page speed tools:
+down, you may have seen advice such as the following from the various page speed tools:
 
 > Parallelize downloads across hostnames
 
@@ -154,7 +154,7 @@ Obviously the DNS work to get all of the hosts pointing the same darkroom instan
 
 ## CLI API
 `darkroom-url-builder` also comes with a tiny command line application to save you from having to spin
-up a node REPL to get the URL of an image. 
+up a node REPL to get the URL of an image.
 
 ### Usage: `darkroom-url-builder darkroomUrl salt uri`
 
