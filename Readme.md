@@ -152,6 +152,17 @@ builder()
 
 Obviously the DNS work to get all of the hosts pointing the same darkroom instance is up to the user.
 
+## CLI API
+`darkroom-url-builder` also comes with a tiny command line application to save you from having to spin
+up a node REPL to get the URL of an image. 
+
+### Usage: `darkroom-url-builder darkroomUrl salt uri`
+
+```
+$ darkroom-url-builder http://0.0.0.0:17999 salt f113b531524b64968a21be183307c7b7
+http://0.0.0.0:17999/original/f113b531524b64968a21be183307c7b7:70615591bd5472c9a9ffff9396b7ba20
+```
+
 ## Tests
 
 Run the tests with `npm test`. Generate a coverage report with `npm test --coverage`.

@@ -3,6 +3,7 @@
   "version": "1.2.0",
   "description": "Build URLs for darkroom resources",
   "main": "url-builder.js",
+  "bin": "./bin/darkroom-url-builder",
   "publishConfig": {
     "registry": "http://registry.npmjs.org/"
   },

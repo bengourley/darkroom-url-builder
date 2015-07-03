@@ -1,0 +1,5 @@
+#!/usr/bin/env node
+var createBuilder = require('../')
+  , builder = createBuilder(process.argv[2], process.argv[3])
+
+console.log(builder().resource(process.argv[4]).url());
