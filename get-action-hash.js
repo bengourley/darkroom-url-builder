@@ -1,7 +1,7 @@
 module.exports = getActionHash
 
-var hash = require('MD5')
+var hash = require('crypto').createHash
 
 function getActionHash(salt, action, uri) {
-  return hash('/' + action.join('/') + '/' + uri + salt)
+  return hash('md5').update('/' + action.join('/') + '/' + uri + salt).digest('hex')
 }

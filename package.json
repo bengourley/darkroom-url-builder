@@ -21,7 +21,6 @@
     "url": "git@github.com:bengourley/darkroom-url-builder.git"
   },
   "dependencies": {
-    "slugg": "~0.1.2",
-    "MD5": "~1.1.0"
+    "slugg": "~0.1.2"
   }
 }
