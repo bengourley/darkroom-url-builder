@@ -54,8 +54,13 @@ Builder.prototype.filename = function (filename) {
   return this
 }
 
+Builder.prototype.format = function (format) {
+  this._format = format
+  return this
+}
+
 Builder.prototype.info = function () {
-  return constructUrl(this.darkroomHost, this.salt, [ 'info' ], this._resource)
+  return constructUrl(this.darkroomHost, this.salt, [ 'info' ], this._resource, this._format)
 }
 
 Builder.prototype.url = function () {
@@ -72,7 +77,7 @@ Builder.prototype.url = function () {
     action = [ this._width ]
   }
 
-  return constructUrl(this.darkroomHost, this.salt, action, this._resource, this._filename)
+  return constructUrl(this.darkroomHost, this.salt, action, this._resource, this._filename, this._format)
 }
 
 function assertNumber(n, name) {
