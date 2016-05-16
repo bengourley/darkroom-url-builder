@@ -74,6 +74,22 @@ describe('constructUrl()', function () {
 
   })
 
+  it('should construct URLs with specified format', function () {
+
+    var darkroomUrl = 'http://darkroom.io'
+      , salt = 'test salt'
+      , actions = [ [ 'original' ], [ 100, 200 ] ]
+      , uri = '012ef7ed27c17ea9524f5f5fb3a86921'
+      , filename = 'jim.jpeg'
+      , format = 'png'
+
+    actions.forEach(function (action, i) {
+      var parts = url.parse(constructUrl(darkroomUrl, salt, action, uri, filename, format))
+      assert.equal(parts.href.substr(parts.href.length - 3), format)
+    })
+
+  })
+
 })
 
 describe('Builder', function () {
