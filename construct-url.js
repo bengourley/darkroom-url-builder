@@ -10,6 +10,6 @@ function constructUrl(darkroomUrl, salt, action, uri, filename, format) {
   if (format) filename += '.' + format
   return [ darkroomUrl ]
     .concat(action)
-    .concat([ uri + ':' + hash ]).join('/') + filename + '.' + format
+    .concat([ uri + ':' + hash ]).join('/') + filename
 
 }
