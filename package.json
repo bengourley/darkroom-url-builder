@@ -9,15 +9,16 @@
   },
   "scripts": {
     "lint": "eslint -f unix .",
-    "test": "./node_modules/.bin/istanbul test ./node_modules/.bin/_mocha -- -R spec"
+    "test": "./node_modules/.bin/_mocha -- -R spec",
+    "coverage": "nyc npm run test"
   },
   "author": "Ben Gourley",
   "license": "BSD",
   "devDependencies": {
     "eslint": "^6.1.0",
     "eslint-plugin-react": "^7.14.3",
-    "istanbul": "~0.4.5",
-    "mocha": "~6.2.0"
+    "mocha": "~6.2.0",
+    "nyc": "^14.1.1"
   },
   "repository": {
     "type": "git",
