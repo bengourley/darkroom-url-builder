@@ -8,19 +8,26 @@
     "registry": "http://registry.npmjs.org/"
   },
   "scripts": {
+    "lint": "eslint -f unix .",
     "test": "./node_modules/.bin/istanbul test ./node_modules/.bin/_mocha -- -R spec"
   },
   "author": "Ben Gourley",
   "license": "BSD",
   "devDependencies": {
-    "mocha": "~1.13.0",
-    "istanbul": "~0.1.44"
+    "eslint": "^6.1.0",
+    "eslint-plugin-react": "^7.14.3",
+    "istanbul": "~0.4.5",
+    "mocha": "~6.2.0"
   },
   "repository": {
     "type": "git",
     "url": "git@github.com:bengourley/darkroom-url-builder.git"
   },
   "dependencies": {
-    "slugg": "~0.1.2"
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "prettier": "^1.18.2",
+    "slugg": "~1.2.1",
+    "standard": "^13.1.0"
   }
 }
